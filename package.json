@@ -8,7 +8,7 @@
       "name": "Adnan Wahab",
       "email": "mail@adnanwahab.com"
     } 
-  ]
+  ],
   "scripts": {
     "test": "vows --spec --isolate"
   },
