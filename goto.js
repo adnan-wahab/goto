@@ -1,9 +1,9 @@
-function coro (){
+function goto (){
   this.iterator = function () {}
   this.scheduler = scheduler
 }
 
-coro.prototype =
+goto.prototype =
   { suspend: function () {
       this.scheduler.suspend(this)
       yield(false)
@@ -206,17 +206,17 @@ function test() {
   for (i = -1; ++i < 100;)
     for (j = -1; ++j < 100;) {
       count += 1
-      var cr1 = coro(current_scheduler, a, i, j)
+      var cr1 = goto(current_scheduler, a, i, j)
       current_scheduler.addcoro(cr1)
     }
 
   for (i = -1; ++i < 100; )
     for (j = -1; ++j < 100; ) {
       count +=1
-      var cr1 = coro(current_scheduler, a, i, j)
+      var cr1 = goto(current_scheduler, a, i, j)
       current_scheduler.addcoro(cr1)
     }
-  current_scheduler.add_coro(coro(current_scheduler, watchdog))
+  current_scheduler.add_coro(goto(current_scheduler, watchdog))
   console.log('starting the run of ' + count + 'coroutines')
   current_scheduler.run()
 }
@@ -224,4 +224,12 @@ function test() {
 function remove (arr, item) {
   arr.splice(arr.indexOf(item), 1)
   return arr
+}
+
+function Heap() {
+
+}
+
+function enumerate() {
+
 }
