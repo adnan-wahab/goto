@@ -1,3 +1,5 @@
+var Heap = require('./heap')
+
 module.exports = goto
 goto.scheduler = scheduler
 goto.monitor = monitor
@@ -107,9 +109,9 @@ scheduler.prototype =
       while(running || timequeue || this.event) {
         this.handle_events()
 
-        while (running) {
+        while (running.length) {
           try {
-            for (var next in enumerate(running)) next[1]()
+            for (var next in running) running[next][1]()
           } catch(e) {
             this.remove_coro_from_running_list(this.index)
           }
@@ -158,20 +160,12 @@ monitor.prototype.run_protected = function (coro, fn) {
   this.sem.acquire(coro)
   try {
     for (var i in fn.apply(this, [].slice.call(arguments, 2))) continue
+    return i
   } finally {
     this.sem.release()
   }
 }
 
 function remove (arr, item) {
-  arr.splice(arr.indexOf(item), 1)
-  return arr
-}
-
-function Heap() {
-
-}
-
-function enumerate() {
-
+   return arr
 }
